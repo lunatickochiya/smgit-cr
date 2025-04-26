@@ -1,11 +1,17 @@
 name: Java CI
 on:
+  push:
+    paths:
+      - '.github/workflows/upstream.yml'
   workflow_dispatch:
     inputs:
       ssh:
         description: 'ssh'
         required: false
         default: 'false'
+  watch:
+    types: started
+  repository_dispatch:
 
 jobs:
   build:
