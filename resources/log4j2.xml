@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Configuration  strict="true" name="XMLConfig"
+               packages="org.apache.logging.log4j.test">
+    <Properties>
+        <Property name="filename">logs.txt</Property>
+    </Properties>
+    <Appenders>
+        <Appender type="File" name="File" fileName="${filename}">
+            <Layout type="PatternLayout">
+                <Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
+            </Layout>
+        </Appender>
+    </Appenders>
+    <Loggers>
+        <Root level="trace">
+            <AppenderRef ref="File"/>
+        </Root>
+    </Loggers>
+</Configuration>

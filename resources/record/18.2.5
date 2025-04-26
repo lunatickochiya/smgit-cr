@@ -1,0 +1,356 @@
+package smartgit;
+
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+import org.jetbrains.annotations.NotNull;
+
+public final class alV
+{
+  private static final Map jdField_a_of_type_JavaUtilMap = new HashMap();
+  private final ajA jdField_a_of_type_SmartgitAjA;
+  private final ajA b;
+  private final boolean jdField_a_of_type_Boolean;
+
+  public static String a()
+  {
+    return "Signature";
+  }
+
+  public static String b()
+  {
+    return "java.awt.event.KeyEvent".substring(15, 18);
+  }
+
+  public static byte[] a(MessageDigest paramMessageDigest, int paramInt)
+  {
+    byte[] arrayOfByte1 = new byte[paramInt];
+    byte[] arrayOfByte2 = paramMessageDigest.digest();
+    int i = Math.min(arrayOfByte1.length, arrayOfByte2.length);
+    for (int j = 0; j < i; j++) {
+      arrayOfByte1[j] = arrayOfByte2[j];
+    }
+    int tmp44_43 = 0; byte[] tmp44_42 = arrayOfByte1;tmp44_42[tmp44_43] = ((byte)(tmp44_42[tmp44_43] & 0x7F)); int
+      tmp53_52 = 0; byte[] tmp53_51 = arrayOfByte1;tmp53_51[tmp53_52] = ((byte)(tmp53_51[tmp53_52] | 0x40));
+    return arrayOfByte1;
+  }
+
+  public static void a(ajA paramajA, MessageDigest paramMessageDigest)
+  {
+    byte[] arrayOfByte1 = paramajA.a();
+    byte[] arrayOfByte2 = a(paramMessageDigest, 16);
+
+    int i = Math.min(arrayOfByte1.length, arrayOfByte2.length);
+    for (int j = 0; j < i; j++) {
+      if (arrayOfByte1[j] != arrayOfByte2[j]) {
+        throw new alS();
+      }
+    }
+  }
+
+  public static MessageDigest a()
+  {
+    try
+    {
+      return MessageDigest.getInstance("byte".substring(0, 3).replace('b', 'S').replace('y', 'H').replace('t', 'A'));
+    }
+    catch (NoSuchAlgorithmException localNoSuchAlgorithmException)
+    {
+      throw new alR(localNoSuchAlgorithmException);
+    }
+  }
+
+  public static BufferedReader a(InputStream paramInputStream)
+  {
+    ByteArrayOutputStream localByteArrayOutputStream = new ByteArrayOutputStream();
+    a(paramInputStream, localByteArrayOutputStream);
+
+    byte[] arrayOfByte = localByteArrayOutputStream.toByteArray();
+    String str = a(arrayOfByte);
+    return a(arrayOfByte, str);
+  }
+
+  public static BufferedReader a(byte[] paramArrayOfByte, String paramString)
+  {
+    alU localalU;
+    try
+    {
+      localalU = new alU(new InputStreamReader(new ByteArrayInputStream(paramArrayOfByte), paramString));
+      localalU.a("#");
+      localalU.b(true);
+      localalU.a(true);
+    }
+    catch (UnsupportedEncodingException localUnsupportedEncodingException)
+    {
+      throw new RY(localUnsupportedEncodingException);
+    }
+    return localalU;
+  }
+
+  public static String a(byte[] paramArrayOfByte)
+  {
+    int i = a(paramArrayOfByte);
+    return a(i);
+  }
+
+  public static void a(String paramString, MessageDigest paramMessageDigest)
+  {
+    byte[] arrayOfByte;
+    try
+    {
+      arrayOfByte = paramString.getBytes("Cp1252");
+    }
+    catch (UnsupportedEncodingException localUnsupportedEncodingException)
+    {
+      throw new alR(localUnsupportedEncodingException);
+    }
+    paramMessageDigest.update(arrayOfByte);
+  }
+
+  public static void a(InputStream paramInputStream, OutputStream paramOutputStream)
+  {
+    try
+    {
+      byte[] arrayOfByte = new byte[65536];
+      for (int i = paramInputStream.read(arrayOfByte); i > 0; i = paramInputStream.read(arrayOfByte)) {
+        paramOutputStream.write(arrayOfByte, 0, i);
+      }
+    }
+    finally
+    {
+      paramOutputStream.flush();
+    }
+  }
+
+  public static alT a(InputStream paramInputStream, boolean paramBoolean, MessageDigest paramMessageDigest1, MessageDigest paramMessageDigest2)
+  {
+    alT localalT = new alT();
+
+    String str1 = a();
+    String str2 = b();
+
+    ajA localajA = null;
+    StringBuilder localStringBuilder = new StringBuilder();
+    Object localObject;
+    try
+    {
+      BufferedReader localBufferedReader = a(paramInputStream);
+      for (localObject = localBufferedReader.readLine(); localObject != null; localObject = localBufferedReader.readLine())
+      {
+        int i = ((String)localObject).indexOf('=');
+        if (i < 0)
+        {
+          if (((String)localObject).length() != 80) {
+            localStringBuilder = new StringBuilder();
+          } else {
+            localStringBuilder.append((String)localObject);
+          }
+          a((String)localObject, paramMessageDigest1);
+        }
+        else
+        {
+          localStringBuilder = new StringBuilder();
+
+          String str4 = ((String)localObject).substring(0, i);
+          String str5 = ((String)localObject).substring(i + 1);
+          if ((str4.equals(str1)) || (str4.equals(str2)))
+          {
+            localajA = ajA.b(str5);
+          }
+          else
+          {
+            a((String)localObject, paramMessageDigest1);
+            a((String)localObject, paramMessageDigest2);
+            localalT.a(str4, str5);
+          }
+        }
+      }
+    }
+    catch (IOException localIOException1)
+    {
+      throw new alR(localIOException1);
+    }
+    if ((paramBoolean) && (localStringBuilder.length() > 0))
+    {
+      String str3 = RG.a(localStringBuilder.toString(), "0", false, true);
+      try
+      {
+        localObject = ajA.c(str3);
+      }
+      catch (IOException localIOException2)
+      {
+        throw new alS();
+      }
+      localalT.b((ajA)localObject);
+    }
+    else if ((!paramBoolean) && (localajA != null))
+    {
+      localalT.a(localajA);
+    }
+    else
+    {
+      throw new alS();
+    }
+    return localalT;
+  }
+
+  public alV(@NotNull ajA paramajA1, @NotNull ajA paramajA2, boolean paramBoolean)
+  {
+    this.jdField_a_of_type_SmartgitAjA = paramajA1;
+    this.b = paramajA2;
+    this.jdField_a_of_type_Boolean = paramBoolean;
+  }
+
+  public QX a(ake paramake)
+  {
+    try
+    {
+      ZipInputStream localZipInputStream = new ZipInputStream(paramake.createStream());localObject1 = null;
+      try
+      {
+        for (ZipEntry localZipEntry = localZipInputStream.getNextEntry(); localZipEntry != null; localZipEntry = localZipInputStream.getNextEntry())
+        {
+          String str = localZipEntry.getName();
+          int i = str.lastIndexOf('/');
+          if (i <= 1) {
+            try
+            {
+              return a(new akH(localZipInputStream));
+            }
+            catch (alR localalR) {}
+          }
+        }
+      }
+      catch (Throwable localThrowable2)
+      {
+        localObject1 = localThrowable2;throw localThrowable2;
+      }
+      finally
+      {
+        if (localZipInputStream != null) {
+          if (localObject1 != null) {
+            try
+            {
+              localZipInputStream.close();
+            }
+            catch (Throwable localThrowable6)
+            {
+              ((Throwable)localObject1).addSuppressed(localThrowable6);
+            }
+          } else {
+            localZipInputStream.close();
+          }
+        }
+      }
+    }
+    catch (IOException localIOException) {}
+    InputStream localInputStream = paramake.createStream();Object localObject1 = null;
+    try
+    {
+      return a(localInputStream);
+    }
+    catch (Throwable localThrowable3)
+    {
+      localObject1 = localThrowable3;throw localThrowable3;
+    }
+    finally
+    {
+      if (localInputStream != null) {
+        if (localObject1 != null) {
+          try
+          {
+            localInputStream.close();
+          }
+          catch (Throwable localThrowable7)
+          {
+            ((Throwable)localObject1).addSuppressed(localThrowable7);
+          }
+        } else {
+          localInputStream.close();
+        }
+      }
+    }
+  }
+
+  public alT a(InputStream paramInputStream)
+  {
+    MessageDigest localMessageDigest1 = a();
+    MessageDigest localMessageDigest2 = a();
+    alT localalT = a(paramInputStream, this.jdField_a_of_type_Boolean, localMessageDigest1, localMessageDigest2);
+    ajA localajA1 = localalT.b();
+    ajA localajA2 = localalT.a();
+    ajA localajA3;
+    if ((this.jdField_a_of_type_Boolean) && (localajA1 != null))
+    {
+      localajA3 = a(localajA1, this.jdField_a_of_type_SmartgitAjA, this.b);
+      a(localajA3, localMessageDigest2);
+    }
+    else if ((!this.jdField_a_of_type_Boolean) && (localajA2 != null))
+    {
+      localajA3 = a(localajA2, this.jdField_a_of_type_SmartgitAjA, this.b);
+      a(localajA3, localMessageDigest1);
+    }
+    else
+    {
+      throw new alS();
+    }
+    return localalT;
+  }
+
+  @NotNull
+  private static ajA a(ajA paramajA1, ajA paramajA2, ajA paramajA3)
+  {
+    synchronized (jdField_a_of_type_JavaUtilMap)
+    {
+      QW localQW = new QW(paramajA1, paramajA2, paramajA3);
+      ajA localajA = (ajA)jdField_a_of_type_JavaUtilMap.get(localQW);
+      if (localajA == null)
+      {
+        localajA = ajA.a(paramajA1, new QX(paramajA2, paramajA3));
+        jdField_a_of_type_JavaUtilMap.put(localQW, localajA);
+      }
+      ajA tmp70_66 = localajA;
+      if (tmp70_66 == null) {
+        throw new IllegalStateException(String.format("@NotNull method must not return null", new Object[0]));
+      }
+      return tmp70_66;
+    }
+  }
+
+  private QX a(InputStream paramInputStream)
+  {
+    ByteArrayOutputStream localByteArrayOutputStream = new ByteArrayOutputStream(32768);
+    alT localalT = a(new akC(paramInputStream, localByteArrayOutputStream));
+    return new QX(localalT, localByteArrayOutputStream.toByteArray());
+  }
+
+  private static int a(byte[] paramArrayOfByte)
+  {
+    if (paramArrayOfByte.length < 8) {
+      return 1;
+    }
+    if (!new String(paramArrayOfByte, 0, 7).equals("Format=")) {
+      return 1;
+    }
+    return paramArrayOfByte[7] - 48;
+  }
+
+  private static String a(int paramInt)
+  {
+    if (paramInt == 1) {
+      return "ISO-8859-1";
+    }
+    return "UTF-8";
+  }
+}

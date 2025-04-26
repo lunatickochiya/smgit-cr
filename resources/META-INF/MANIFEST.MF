@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Premain-Class: com.crack.smartgit.allkill.Agent
+Main-Class: com.crack.smartgit.Usage
+Can-Redefine-Classes: true
+Can-Retransform-Classes: true
